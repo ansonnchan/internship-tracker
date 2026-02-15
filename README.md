@@ -17,3 +17,8 @@ A full-stack application to help students track job applications with email anal
 - Axios for API calls
 - Chart.js/Recharts for analytics
 - CSS for UI/UX
+
+## Future Improvements 
+- instead of manually entering in email contents/subjects
+- try to use gmail api so it can access via email
+  
