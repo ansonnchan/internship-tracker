@@ -2,12 +2,11 @@ package com.anson.internshiptracker.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;  
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,16 +30,16 @@ public class JwtUtil {
     // create token with claims and subject 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .claims(claims)         
+                .subject(subject)       
+                .issuedAt(new Date(System.currentTimeMillis()))      
+                .expiration(new Date(System.currentTimeMillis() + expiration))  
+                .signWith(getSigningKey())  
                 .compact();
     }
     
     // Get signing key from secret
-    private Key getSigningKey() {
+    private SecretKey getSigningKey() { 
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
     
@@ -62,13 +61,13 @@ public class JwtUtil {
     
     // extract all claims from token 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
+        return Jwts.parser()                
+                .verifyWith(getSigningKey())    
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
+                .parseSignedClaims(token)   
+                .getPayload();              
     
+    }
     // check if token expired 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());

@@ -22,7 +22,6 @@ public class Application {
     private String position;
     
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Status is required")
     private ApplicationStatus status;
     
     private LocalDate dateApplied;
