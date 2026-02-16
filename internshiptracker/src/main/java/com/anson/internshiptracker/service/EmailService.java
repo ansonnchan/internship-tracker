@@ -1,33 +1,35 @@
 package com.anson.internshiptracker.service;
 
+import com.anson.internshiptracker.model.ApplicationStatus;
 import com.anson.internshiptracker.util.EmailClassifier;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
     
-    @Autowired
-    private ApplicationService applicationService;
-
-    //classify by email and update application status
-    public String classifyAndUpdate(Long applicationId, String emailSubject, String emailBody) {
-        //use emailclassifier to get status
-        String status = EmailClassifier.classify(emailSubject, emailBody);
+    private final ApplicationService applicationService;
+    
+    public EmailService(ApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
+    
+    // Classify email and update application status
+    public ApplicationStatus classifyAndUpdate(Long applicationId, String emailSubject, String emailBody, Long userId) {
+        // Use EmailClassifier to get status (returns ApplicationStatus enum)
+        ApplicationStatus status = EmailClassifier.classify(emailSubject, emailBody);
         
-        //update application
-        applicationService.updateStatus(applicationId, status);
-
+        // Update application with the classified status
+        applicationService.updateStatus(applicationId, status, userId);
+        
         return status;
     }
 
-    //subject only 
-    public String classifyAndUpdate(Long applicationId, String emailSubject) {
-        return classifyAndUpdate(applicationId, emailSubject, "");
+    public ApplicationStatus classifyAndUpdate(Long applicationId, String emailSubject, Long userId) {
+        return classifyAndUpdate(applicationId, emailSubject, "", userId);
     }
-
-    //classify w/o updating
-    public String classifyOnly(String emailSubject, String emailBody) {
-        return EmailClassifier.classify(emailSubject, emailBody); 
+    
+    // Classify without updating 
+    public ApplicationStatus classifyOnly(String emailSubject, String emailBody) {
+        return EmailClassifier.classify(emailSubject, emailBody);
     }
 }
