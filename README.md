@@ -1,6 +1,6 @@
-# Internship Tracker Backend
+# MyInternship Backend
 
-Backend API for Internship Tracker, built with Java Spring Boot and deployed on Render with PostgreSQL.
+Backend for MyInternship, built with Java Spring Boot and deployed on Render with PostgreSQL.
 
 ## Live API
 - Base URL: [https://internship-tracker-xo8m.onrender.com](https://internship-tracker-xo8m.onrender.com)
