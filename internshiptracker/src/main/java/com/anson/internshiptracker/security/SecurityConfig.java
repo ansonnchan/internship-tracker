@@ -39,7 +39,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/users/signup", "/api/users/login",  "/api/emails/classify", "/h2-console/**").permitAll() // Public endpoints
+                .requestMatchers("/api/users/signup", "/api/users/login", "/api/emails/classify", "/api/health", "/h2-console/**").permitAll() // Public endpoints
                 .anyRequest().authenticated() // All other endpoints require authentication
             )
             .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // Allow H2 console frames
