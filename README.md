@@ -1,6 +1,6 @@
 # MyInternship Backend
 
-Backend for MyInternship, built with Java Spring Boot and deployed on Render with PostgreSQL.
+Backend API for MyInternship, built with Java Spring Boot and deployed on Render with PostgreSQL.
 
 ## Live API
 - Base URL: [https://internship-tracker-xo8m.onrender.com](https://internship-tracker-xo8m.onrender.com)
@@ -30,6 +30,13 @@ Auth model: `JWT Bearer token` for protected endpoints.
 - CORS policy for local and production clients
 - Health endpoint for deployment verification
 
+## Distinctive Feature
+Unlike traditional application trackers, MyInternship lets users paste email subject and body to automatically classify applications as:
+ - Offer
+ - Rejection
+ - Interview
+ - Other (Online Assessments, Take home assessments etc.)
+
 ## Project Structure
 ```text
 internshiptracker/
@@ -39,10 +46,10 @@ internshiptracker/
 |   |-- repository/               # JPA repositories
 |   |-- model/                    # Entities + enums
 |   |-- security/                 # Security config + JWT filter
-|   |-- util/                     # JWT / helper utilities
-|   `-- exception/                # Exception model + handlers
+|   |-- util/                     # JWT / Email Classifier
+|   |-- exception/                # Exception model + handlers
 |-- src/main/resources/
-|   `-- application.properties    # Runtime config
+|   |-- application.properties    # Runtime config
 |-- pom.xml
 |-- Dockerfile
-`-- .env.local
+|-- .env.example
